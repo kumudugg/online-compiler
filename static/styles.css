@@ -29,5 +29,22 @@ body {
     box-sizing: border-box;
     border-radius: 10px;
     resize: none;
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    white-space: pre-wrap; /* Preserve line breaks */
+    word-wrap: break-word; /* Break long words */
+}   
+
+.box {
+    width: 100vw;
+    height: 60vh;
+    background-color:rgb(58, 58, 58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 1s;
+}
+
+.box:hover {
+    background-color: rgb(95, 92, 92);
 }
 

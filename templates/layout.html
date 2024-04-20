@@ -8,6 +8,29 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link href="/static/styles.css" rel="stylesheet" type="text/css">
         <title>{% block title %} {% endblock %}</title>
+
+        <script>
+            // Function to handle tab key press event
+            function handleTabKeyPress(event) {
+                // Check if the pressed key is the tab key (key code 9)
+                if (event.keyCode === 9) {
+                    event.preventDefault(); // Prevent default tab behavior
+                    
+                    // Get the textarea element
+                    var textarea = document.getElementById("codearea");
+                    
+                    // Get the current cursor position
+                    var start = textarea.selectionStart;
+                    var end = textarea.selectionEnd;
+                    
+                    // Insert tab character at the cursor position
+                    textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
+                    
+                    // Move the cursor position after the inserted tab
+                    textarea.selectionStart = textarea.selectionEnd = start + 1;
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -18,39 +41,30 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    {% if session["user_id"] %}
-                        <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/history">History</a></li>
-                        </ul>
-                        <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/logout">Log out</a></li>
-                        </ul>
-
-                    {% else %}
-                        <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
-                        </ul>
-                    {% endif %}
+                    <ul class="navbar-nav me-auto mt-2">
+                        <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/python">Python</a></li>
+                        <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/c">C</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
-
-        <main class="container py-5">
-            <form action="/" method="POST">
-                <div class="form-floating">
-                    <textarea class="coding-area" placeholder="Code goes here...." autofocus style="height:300px" name="code"></textarea>
+        {% block index %}
+            <main>
+                <div class="container py-5">
+                    {% block form %} {% endblock %}
+                        <div class="form-floating">
+                            <textarea class="coding-area" placeholder="Code goes here...." autofocus style="height:300px" name="code" id="codearea" onkeydown="handleTabKeyPress(event)"></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <input type="submit" class="btn btn-dark btn-lg m-1 " value="Run">
+                        </div>
+                    </form>
                 </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <input type="submit" class="btn btn-dark btn-lg m-1 " value="Submit">
-                </div>
-            </form>
-        
-            <footer class="container py-5">
-                <div class="fs-5" style="color: aliceblue;">Output:</div>
-                <pre class="out m-2">{{output}}</pre>
-            </footer>
-        </main>
-
+                <footer class="container py-5">
+                    <div class="fs-5" style="color: aliceblue;">Output:</div>
+                    <pre class="out m-2">{{output}}</pre>
+                </footer>
+            </main>
+        {% endblock %}
     </body>
 </html>

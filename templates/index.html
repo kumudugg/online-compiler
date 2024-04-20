@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+    <form action="/" method="POST">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Python code" id="floatingTextarea2" style="height:300px" name="code"></textarea>
+            <label for="floatingTextarea2">Enter your python code</label>
+        </div>
+        <input type="submit" class="btn btn-outline-success btn-lg m-1" value="Submit">
+    </form>
+{% endblock %}

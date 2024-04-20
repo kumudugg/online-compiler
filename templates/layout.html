@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color" data-bs-theme="dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">Python Interpreter</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,10 +25,8 @@
                     {% if session["user_id"] %}
                         <ul class="navbar-nav me-auto mt-2">
                             <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/history">History</a></li>
-                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/home">Home</a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/changepw">History</a></li>
                             <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/logout">Log out</a></li>
                         </ul>
 
@@ -45,14 +43,15 @@
         {% if get_flashed_messages() %}
         <header>
             <div class="alert alert-primary mb-0 text-center" role="alert">
-                {{ get_flashed_messages() | join(" ") }}
+                {{error}}
             </div>
         </header>
         {% endif %}
 
 
-        <main class="container py-5 text-center">
+        <main class="container py-5">
             {% block main %}{% endblock %}
         </main>
+
     </body>
 </html>

@@ -7,9 +7,15 @@
 {% block main %}
     <form action="/" method="POST">
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Python code" id="floatingTextarea2" style="height:300px" name="code"></textarea>
-            <label for="floatingTextarea2">Enter your python code</label>
+            <textarea class="coding-area" placeholder="Python code" autofocus style="height:300px" name="code"></textarea>
         </div>
-        <input type="submit" class="btn btn-outline-success btn-lg m-1" value="Submit">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <input type="submit" class="btn btn-dark btn-lg m-1 " value="Submit">
+        </div>
     </form>
+
+    <footer class="container py-5">
+        <div class="fs-5" style="color: aliceblue;">Output:</div>
+        <pre class="out m-2">{{output}}</pre>
+    </footer>
 {% endblock %}

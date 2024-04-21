@@ -7,34 +7,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link href="/static/styles.css" rel="stylesheet" type="text/css">
-        <title>{% block title %} {% endblock %}</title>
-
-        <script>
-            function handleTabKeyPress(event) {
-                if (event.keyCode === 9) {
-                    event.preventDefault();
-                    var textarea = document.getElementsByTagName("textarea")[0];
-                    
-                    // Get the current cursor position
-                    var start = textarea.selectionStart;
-                    var end = textarea.selectionEnd;
-                    
-                    // Insert tab character at the cursor position
-                    textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
-                    
-                    // Move the cursor position after the inserted tab
-                    textarea.selectionStart = textarea.selectionEnd = start + 1;
-                }
-            }
-
-            function clearAll() {
-                document.getElementsByTagName("textarea")[0].value = " ";
-                document.getElementsByTagName("pre")[0].innerHTML = " ";
-            }
-
-        </script>
+        <link href="static/favicon.png" rel="icon" type="image/png">
+        <title> Complier: {% block title %} {% endblock %}</title>
+        <script src="/static/core.js"></script>
     </head>
-
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color" data-bs-theme="dark">
             <div class="container-fluid">
@@ -48,19 +24,44 @@
                         <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/c">C</a></li>
                         <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/sql ">SQL</a></li>
                     </ul>
+                    {% if session ["user_id"] %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/History">History</a></li>
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/logout">Logout</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/login">Login</a></li>
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/register">Register</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </nav>
+        {% if get_flashed_messages() %}
+        <header id="flash-alert">
+            <div class="alert mb-0 text-center" role="alert">
+                <div style="display: inline-flex; align-items: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:" width="16" height="16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </div>        
+        </header>
+        {% endif %}
         {% block index %}
+            <div class="fs-2 m-4 fw-bolder" style="color:aliceblue">{% block head %} {% endblock %}</div>
             <main>
-                <div class="container py-5">
-                    {% block form %} {% endblock %}
+                <div class="container py-2">
+                    <form id="myform" action = {% block action %} {% endblock %} method="POST">
                         <div class="form-floating">
-                            <textarea class="coding-area" placeholder="Code goes here...." autofocus style="height:300px" name="code" onkeydown="handleTabKeyPress(event)"></textarea>
+                            <textarea class="coding-area" autofocus style="height:300px" name="code" onkeydown="handleTabKeyPress(event)"></textarea>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="button" class="btn btn-dark btn-lg m-1" onclick="clearAll()">Reset</button>
-                            <button type="submit" class="btn btn-dark btn-lg m-1">Run</button>
+                            <button type="submit" class="btn btn-dark btn-lg m-1" id="execute">Run</button>
+                            {% if session ["user_id"] %} <button type="submit" class="btn btn-dark btn-lg m-1">Save</button> {% endif %}
                         </div>
                     </form>
                 </div>

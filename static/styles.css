@@ -34,17 +34,16 @@ body {
     word-wrap: break-word; /* Break long words */
 }   
 
-.box {
-    width: 100vw;
-    height: 60vh;
-    background-color:rgb(58, 58, 58);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition-duration: 1s;
+#flash-alert {
+    background-color: dimgrey;
+    transition-duration: 0.5s;
+    color: whitesmoke;
 }
 
-.box:hover {
-    background-color: rgb(95, 92, 92);
+#flash-alert:hover {
+    background-color: rgb(32, 33, 39);
 }
 
+.form-control {
+    background-color: dimgrey;
+}

@@ -10,14 +10,10 @@
         <title>{% block title %} {% endblock %}</title>
 
         <script>
-            // Function to handle tab key press event
             function handleTabKeyPress(event) {
-                // Check if the pressed key is the tab key (key code 9)
                 if (event.keyCode === 9) {
-                    event.preventDefault(); // Prevent default tab behavior
-                    
-                    // Get the textarea element
-                    var textarea = document.getElementById("codearea");
+                    event.preventDefault();
+                    var textarea = document.getElementsByTagName("textarea")[0];
                     
                     // Get the current cursor position
                     var start = textarea.selectionStart;
@@ -30,13 +26,19 @@
                     textarea.selectionStart = textarea.selectionEnd = start + 1;
                 }
             }
+
+            function clearAll() {
+                document.getElementsByTagName("textarea")[0].value = " ";
+                document.getElementsByTagName("pre")[0].innerHTML = " ";
+            }
+
         </script>
     </head>
 
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Online C/Python complier</a>
+                <a class="navbar-brand" href="/">Online complier</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,6 +46,7 @@
                     <ul class="navbar-nav me-auto mt-2">
                         <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/python">Python</a></li>
                         <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/c">C</a></li>
+                        <li class="nav-item"> <a class="nav-link active" aria-current="page" href="/sql ">SQL</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,10 +56,11 @@
                 <div class="container py-5">
                     {% block form %} {% endblock %}
                         <div class="form-floating">
-                            <textarea class="coding-area" placeholder="Code goes here...." autofocus style="height:300px" name="code" id="codearea" onkeydown="handleTabKeyPress(event)"></textarea>
+                            <textarea class="coding-area" placeholder="Code goes here...." autofocus style="height:300px" name="code" onkeydown="handleTabKeyPress(event)"></textarea>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <input type="submit" class="btn btn-dark btn-lg m-1 " value="Run">
+                            <button type="button" class="btn btn-dark btn-lg m-1" onclick="clearAll()">Reset</button>
+                            <button type="submit" class="btn btn-dark btn-lg m-1">Run</button>
                         </div>
                     </form>
                 </div>

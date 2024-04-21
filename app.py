@@ -1,5 +1,6 @@
 # import libraries
 import sqlite3
+import secrets
 import subprocess
 from flask import Flask, redirect, render_template, request, flash, session
 from flask_session import Session
@@ -7,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # configure app
 app = Flask("__name__")
-app.secret_key = "ljlfds[f]dsf90845fsd[dfss'.fd;al43242943-fs[a;f[a..;a,;sf ]]]"
+app.secret_key = secrets.token_bytes(24)
 
 # configure session
 app.config["SESSION_PERMANENT"] = True
@@ -60,7 +61,8 @@ def login():
                     return render_template("login.html")
 
         except Exception as e:
-            return render_template("login.html", error = str(e))
+            flash(str(e))
+            return render_template("login.html")
 
     else:
         return render_template("login.html")
@@ -181,12 +183,20 @@ def sql():
         code = request.form.get("code")
 
         if code == "":
+            flash("")
             return render_template("sql.html")
         
-        try:
-            print(code)
-            conn.execute(code)
-            return render_template("sql.html", output = conn.fetchall())
+        try:        
+            process = subprocess.Popen(["sqlite3", "temp/sql.db"],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            stdout, stderr = process.communicate(input=code)
+
+            if process.returncode == 0:
+                output = stdout
+
+            else:
+                output = stderr
+
+            return render_template("sql.html", output = output)
         
         except Exception as e:
             return render_template("sql.html", output = str(e))
@@ -194,6 +204,6 @@ def sql():
     else:
         return render_template("sql.html")
     
-
+    
 if __name__ == "__main__":
     app.run(debug=True)

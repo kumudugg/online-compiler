@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "main.html" %}
 
 {% block title %}
     Home
@@ -6,6 +6,7 @@
 
 {% block index %}
     <div class="container py-5 text-center" style="color:white">
+        {% if session["user_id"] %}<div class="fs-4 fw-normal font-monospace m-5" style="color:aliceblue;">Hi, {{username}}</div>{% endif %}
         <div class="fs-1 fw-bolder font-monospace"> Online complier</div>
         <div class="fs-3 fw-normal font-monospace m-3"> A simple web application for run C, Python and SQL codes</div>
         <!-- <div class="fs-5 fw-normal font-monospace m-3"> Please register for save your code snippets</div> -->

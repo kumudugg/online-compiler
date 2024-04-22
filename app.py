@@ -30,7 +30,14 @@ def after_request(response):
 # index
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if session.get("user_id"):
+        conn.execute("SELECT username FROM users WHERE id = (?)", (session["user_id"],))
+        username = conn.fetchone()[0]
+        username = username[0].upper() + username[1:]
+        return render_template("index.html", username=username)
+    
+    else:
+        return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -106,6 +113,43 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route("/snippets", methods=["GET", "POST"])
+def snippets():
+
+    if request.method == "POST" and request.form.get(".method") == "del":
+        try:
+            conn.execute("DELETE FROM snippets WHERE user_id = (?)", (session["user_id"],))
+            database.commit()
+            flash("Snippet deleted")
+            return redirect("/snippets")
+        
+        except Exception as e:
+            flash(str(e))
+            return render_template("snippets.html")
+        
+        
+    elif request.method == "POST":
+        title = request.form.get("title")
+        code = request.form.get("code")
+
+        if title == "" or code == "":
+            flash("Invalid input")
+            return render_template("snippets.html")
+        
+        try:
+            conn.execute("INSERT INTO snippets (user_id, lang, code) VALUES (?,?,?)", (session["user_id"], title, code))
+            database.commit()
+            flash("Snippet added")
+            return redirect(f"/{title.lower()}")
+        
+        except Exception as e:
+            flash(str(e))
+            return render_template("snippets.html")
+        
+    else:
+        conn.execute("SELECT * FROM snippets WHERE user_id = (?)", (session["user_id"],))
+        return render_template("snippets.html", details = conn.fetchall())
+
 
 @app.route("/logout")
 def logout():
@@ -116,11 +160,14 @@ def logout():
 # python
 @app.route("/python", methods=["GET", "POST"])
 def python():
+    variables = {"title":"Python", "head":"Python", "action=":"/python"}
+
     if request.method == "POST":
         code = request.form.get("code")
 
         if code == "":
-            return render_template("python.html")
+            flash("Null")
+            return render_template("main.html", **variables)
 
         try:
             process = subprocess.Popen(['python3', '-c', code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -132,22 +179,25 @@ def python():
             else:
                 output = stderr
             
-            return render_template("python.html", output = output)
+            return render_template("main.html", output = output, **variables)
         
         except Exception as e:
-            return render_template("python.html", output = str(e))
+            return render_template("main.html", output = str(e), **variables)
         
     else:
-        return render_template("python.html")
+        return render_template("main.html", **variables)
     
 # C
 @app.route("/c", methods=["GET", "POST"])
 def c():
+    variables = {"title":"C", "head":"C", "action=":"/c"}
+
     if request.method == "POST":
         code = request.form.get("code")
 
         if code == "":
-            return render_template("c.html")
+            flash("Null")
+            return render_template("main.html", **variables)
         
         try:
             with open("temp/c_temp.c", "w") as file:
@@ -168,25 +218,29 @@ def c():
             else:
                 output = gcc.stderr.decode()
 
-            return render_template("c.html", output = output)
+            return render_template("main.html", output = output, **variables)
         
         except Exception as e:
-            return render_template("c.html", output = str(e))       
+            return render_template("main.html", output = str(e), **variables)       
         
     else:
-        return render_template("c.html")
+        return render_template("main.html", **variables)
     
 # SQL
 @app.route("/sql", methods=["GET", "POST"])
 def sql():
+    variables = {"title":"SQL", "head":"SQL", "action=":"/sql"}
+
     if request.method == "POST":
         code = request.form.get("code")
 
         if code == "":
-            flash("")
-            return render_template("sql.html")
+            flash("Null")
+            return render_template("main.html", **variables)
         
-        try:        
+        try:
+            subprocess.run(['sqlite3', 'temp/sql.db', '.exit'], check=True)
+
             process = subprocess.Popen(["sqlite3", "temp/sql.db"],stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             stdout, stderr = process.communicate(input=code)
 
@@ -196,13 +250,13 @@ def sql():
             else:
                 output = stderr
 
-            return render_template("sql.html", output = output)
+            return render_template("main.html", output = output, **variables)
         
         except Exception as e:
-            return render_template("sql.html", output = str(e))
+            return render_template("main.html", output = str(e), **variables)
         
     else:
-        return render_template("sql.html")
+        return render_template("main.html", **variables)
     
     
 if __name__ == "__main__":

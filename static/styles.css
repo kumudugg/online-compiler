@@ -38,6 +38,7 @@ body {
     background-color: dimgrey;
     transition-duration: 0.5s;
     color: whitesmoke;
+    opacity: 0;
 }
 
 #flash-alert:hover {
@@ -46,4 +47,18 @@ body {
 
 .form-control {
     background-color: dimgrey;
+}
+
+.table th {
+    background-color: rgb(58, 58, 58);
+    border: 1px solid black;
+    padding: 8px;
+    color:white
+}
+
+.table td {
+    background-color: rgb(58, 58, 58);
+    border: 1px solid black;
+    padding: 8px;
+    color: white;
 }

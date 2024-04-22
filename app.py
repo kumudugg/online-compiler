@@ -116,9 +116,20 @@ def register():
 @app.route("/snippets", methods=["GET", "POST"])
 def snippets():
 
-    if request.method == "POST" and request.form.get(".method") == "del":
+    if request.method == "POST" and request.form.get(".method") == "delall":
         try:
             conn.execute("DELETE FROM snippets WHERE user_id = (?)", (session["user_id"],))
+            database.commit()
+            flash("All snippets deleted")
+            return redirect("/snippets")
+        
+        except Exception as e:
+            flash(str(e))
+            return render_template("snippets.html")
+        
+    elif request.method == "POST" and request.form.get(".method") == "del":
+        try:
+            conn.execute("DELETE FROM snippets WHERE user_id = (?) AND id = (?)", (session["user_id"], request.form.get("snippet_id")))
             database.commit()
             flash("Snippet deleted")
             return redirect("/snippets")

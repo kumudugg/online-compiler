@@ -6,26 +6,30 @@
 
 {% block index %}
 <div class="container-fluid py-2">
-    <form action="/snippets" method="POST">
+    <form action="/snippets" method="POST" class="d-flex justify-content-end">
         <div class="m-2">
-            <input type="hidden" name=".method" value="del">
+            <input type="hidden" name=".method" value="delall">
             <button class="btn btn-dark" type="submit">Delete All</button>
         </div>
     </form>
     <table class="table">
         <thead>
           <tr>
-            <th scope="col" style="width: 5%;">#</th>
-            <th scope="col" style="width: 10%;">Lang</th>
+            <th scope="col" style="width: 10%;">Language</th>
             <th scope="col">Code</th>
+            <th scope="col" style="width: 5%;"></th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
         {% for row in details %}
             <tr>
-                <th scope="row" style="width: 5%;">{{row[0]}}</th>
                 <td style="width: 10%;">{{row[2]}}</td>
                 <td>{{row[3]}}</td>
+                <form action="/snippets" method="POST">
+                    <input type="hidden" name=".method" value="del">
+                    <input type="hidden" name="snippet_id" value="{{row[0]}}">
+                    <td><button class="btn btn-dark" type="submit">Delete</button></td>
+                </form>
             </tr>
         {% endfor %}
         </tbody>

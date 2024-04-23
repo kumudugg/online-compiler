@@ -147,6 +147,9 @@ def snippets():
             flash("Invalid input")
             return render_template("snippets.html")
         
+        code = code.replace("\n", "<br>")
+        code = code.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
+        
         try:
             conn.execute("INSERT INTO snippets (user_id, lang, code) VALUES (?,?,?)", (session["user_id"], title, code))
             database.commit()
@@ -159,7 +162,9 @@ def snippets():
         
     else:
         conn.execute("SELECT * FROM snippets WHERE user_id = (?)", (session["user_id"],))
-        return render_template("snippets.html", details = conn.fetchall())
+        data = conn.fetchall()
+
+        return render_template("snippets.html", details = data)
 
 
 @app.route("/logout")
@@ -181,12 +186,16 @@ def python():
             return render_template("main.html", **variables)
 
         try:
-            process = subprocess.Popen(['python3', '-c', code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            with open("temp/py_temp.py", "w") as f:
+                f.write(code)
+
+            process = subprocess.Popen(['python3', 'temp/py_temp.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
             stdout, stderr = process.communicate()
 
             if process.returncode == 0:
                 output = stdout
-
+                
             else:
                 output = stderr
             

@@ -20,11 +20,12 @@
             <th scope="col" style="width: 5%;"></th>
           </tr>
         </thead>
-        <tbody class="table-group-divider">
+        <tbody>
         {% for row in details %}
             <tr>
+                {{data}}
                 <td style="width: 10%;">{{row[2]}}</td>
-                <td>{{row[3]}}</td>
+                <td>{{row[3] | safe}}</td>
                 <form action="/snippets" method="POST">
                     <input type="hidden" name=".method" value="del">
                     <input type="hidden" name="snippet_id" value="{{row[0]}}">

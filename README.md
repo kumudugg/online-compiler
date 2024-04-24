@@ -11,18 +11,21 @@
 </ul>
 
 <h3>Important: </h3>
-* Users can use this program without registering. But they can't save their codes.
-* The save button below text box is only shown after user logged in
-* The flash message will automatically hide after 2 seconds
-* I used seperate database for users to enter their commands. They can't access the main one.
-* The most challanging thing for me is that when user runs their code. That enterd code will disappered.
-* I use js for prevent this and also used ChatGPTs help.
-* Another challenging this was, When user save their codes, It doesen't showed indentation.
-* For this, I used txt.replace and in html, I used ("| safe") inside of that variable
-* I tried to use prism.js for syntax highlighting. But it's not working on textarea
-* Also, I used only one html page for 3 routings. (python, sql and c) and use jinja for pass variables
-* Thats why in these routs, there are dictonaries called variables.
-* And used lot of bootstrap.
+<ul>
+    <li>Users can use this program without registering. But they can't save their codes.</li>
+    <li>The save button below text box is only shown after user logged in.</li>
+    <li>The flash message will automatically hide after 2 seconds.</li>
+    <li>I used a separate database for users to enter their commands. They can't access the main one.</li>
+    <li>The most challenging thing for me is that when user runs their code, that entered code will disappear.</li>
+    <li>I use JavaScript to prevent this and also use ChatGPT's help.</li>
+    <li>Another challenging thing was, when user save their codes, it doesn't show indentation.</li>
+    <li>For this, I used txt.replace and in HTML, I used ("| safe") inside of that variable.</li>
+    <li>I tried to use prism.js for syntax highlighting, but it's not working on textarea.</li>
+    <li>Also, I used only one HTML page for 3 routings (Python, SQL, and C) and use Jinja for passing variables.</li>
+    <li>That's why in these routes, there are dictionaries called variables.</li>
+    <li>And used a lot of Bootstrap.</li>
+</ul>
+
 <br><br>
 
 <i> Not included description about register, login and logout functions. It mostly same as CS50 previous project. </i>

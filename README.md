@@ -24,9 +24,10 @@
 * Also, I used only one html page for 3 routings. (python, sql and c) and use jinja for pass variables
 * Thats why in these routs, there are dictonaries called variables.
 * And used lot of bootstrap.
-
+<br><br>
 
 <i> Not included description about register, login and logout functions. It mostly same as CS50 previous project. </i>
+<br><br>
 
 <dl>
    <dt>For these three, I used python library called subprocess to run users commands</dt>
@@ -36,7 +37,7 @@
    * In sqlite, I created a another database for users to access. It only contain dummy values and users can do anything with it.
    </dd>
 </dl>
-
+<br><br>
 <dl>
    <dt>The somewhat complex function is snippets, it checks 4 conditions instead of 2. </dt>
    <dd>
@@ -45,6 +46,6 @@
    * In third one check if request is post, It triggers when user click save button below the commands.
    </dd>
 </dl>
-
+<br>
 
 That's it.

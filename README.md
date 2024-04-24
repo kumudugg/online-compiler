@@ -32,9 +32,11 @@
 <dl>
    <dt>For these three, I used python library called subprocess to run users commands</dt>
    <dd>
-   * In python, If request method is POST, getting given code from form and put it in to subprocess with "python3 -c". then, it will output result or error to the output.
-   * In C, It is exactly same as python. Only difference is that the program is save code file into temp folder and then executes it. That file automatically overwrite when user run commands.
-   * In sqlite, I created a another database for users to access. It only contain dummy values and users can do anything with it.
+      <ul>
+         <li> In python, If request method is POST, getting given code from form and put it in to subprocess with "python3 -c". then, it will output result or error to the output.</li>
+         <li> In C, It is exactly same as python. Only difference is that the program is save code file into temp folder and then executes it. That file automatically overwrite when user run commands</li>
+         <li>In sqlite, I created a another database for users to access. It only contain dummy values and users can do anything with it.</li>
+      </ul>
    </dd>
 </dl>
 <br><br>

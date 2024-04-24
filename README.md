@@ -9,7 +9,6 @@
    <li>You need to have python, gcc and sqlite3 installed.</li>
    <li>You need to have flask installed</li>
 </ul>
-<br>
 
 <h3>Important: </h3>
 * Users can use this program without registering. But they can't save their codes.
@@ -27,7 +26,7 @@
 <br><br>
 
 <i> Not included description about register, login and logout functions. It mostly same as CS50 previous project. </i>
-<br><br>
+<br>
 
 <dl>
    <dt>For these three, I used python library called subprocess to run users commands</dt>

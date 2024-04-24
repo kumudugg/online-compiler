@@ -1,17 +1,17 @@
 <h1> Online compiler </h1>
 
 
-<h4> Description </h4>
+<h3> Description: </h3>
 <p>A simple web application made by flask for run C, Python and SQL codes</p>
 
-<h5>Note</h5>
+<h3>Note:</h3>
 <ul>
    <li>You need to have python, gcc and sqlite3 installed.</li>
    <li>You need to have flask installed</li>
 </ul>
 <br>
 
-<h5>Important</h5>
+<h3>Important: </h3>
 * Users can use this program without registering. But they can't save their codes.
 * The save button below text box is only shown after user logged in
 * The flash message will automatically hide after 2 seconds
@@ -43,9 +43,12 @@
 <dl>
    <dt>The somewhat complex function is snippets, it checks 4 conditions instead of 2. </dt>
    <dd>
-   * In first one, it checks request method is POST and ".method is delall." .method is a hidden fuction that I put in form to delete all the snippets user saved.
-   * In second one, It checks request method is POST and ".method is del. I used this for delete saved snipptes one by one.
-   * In third one check if request is post, It triggers when user click save button below the commands.
+      <ul>
+         <li>In first one, it checks request method is POST and ".method is delall." .method is a hidden fuction that I put in form to delete all the snippets user saved.</li>
+         <li>In second one, It checks request method is POST and ".method is del. I used this for delete saved snipptes one by one.</li>
+         <li>In third one check if request is post, It triggers when user click save button below the commands.</li>
+      </ul>
+   
    </dd>
 </dl>
 <br>

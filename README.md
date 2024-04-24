@@ -5,10 +5,9 @@
 
 A simple web application made by flask for run C, Python and SQL codes
 
-
+[!NOTE]
 - You need to have python, gcc and sqlite3 installed.
 - You need to have flask installed
-
 
 * Users can use this program without registering. But they can't save their codes.
 * The save button below text box is only shown after user logged in

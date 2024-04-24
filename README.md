@@ -38,7 +38,6 @@
       </ul>
    </dd>
 </dl>
-<br>
 <dl>
    <dt>The somewhat complex function is snippets, it checks 4 conditions instead of 2. </dt>
    <dd>

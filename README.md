@@ -26,7 +26,7 @@
     <li>And used a lot of Bootstrap.</li>
 </ul>
 
-<br><br>
+<br>
 
 <i> Not included description about register, login and logout functions. It mostly same as CS50 previous project. </i>
 <br>
